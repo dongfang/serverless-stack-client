@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 import { onError } from "../libs/errorLib";
-import { Elements, StripeProvider } from "react-stripe-elements";
+import { Elements, loadStripe } from "@stripe/react-stripe-js";
 import BillingForm from "../components/BillingForm";
 import "./Settings.css";
 import config from "../config";
@@ -12,8 +12,11 @@ export default function Settings() {
     const [isLoading, setIsLoading] = useState(false);
     const [stripe, setStripe] = useState(null);
 
+    // useEffect(() => {
+    //    setStripe(window.Stripe(config.STRIPE_KEY));
+    //}, []);
     useEffect(() => {
-        setStripe(window.Stripe(config.STRIPE_KEY));
+        setStripe(loadStripe(config.STRIPE_KEY));
     }, []);
     
     function billUser(details) {
@@ -46,8 +49,8 @@ export default function Settings() {
 
     return (
             <div className="Settings">
-            <StripeProvider stripe={stripe}>
             <Elements
+        stripe={stripe}
         fonts={[
             {
                 cssSrc:
@@ -57,7 +60,6 @@ export default function Settings() {
             >
             <BillingForm isLoading={isLoading} onSubmit={handleFormSubmit} />
             </Elements>
-            </StripeProvider>
             </div>
     );
 }
