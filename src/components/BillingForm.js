@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { CardElement, useStripe, useElements, ElementsConsumer } from "@stripe/react-stripe-js";
+import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
 import LoaderButton from "./LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
 import "./BillingForm.css";
